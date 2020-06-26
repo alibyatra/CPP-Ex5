@@ -18,13 +18,17 @@ namespace itertools{
                 : _container(container), _function(func){}
 
         class iterator{
-            decltype(*(_container.begin())) _data;
+            typename CONT::value_type _data;
             typename CONT::iterator _iter;
             typename CONT::iterator _end;
             FUNC _function;
         public:
             explicit iterator(typename CONT::iterator iter, typename CONT::iterator end, FUNC func)
-                    : _iter(iter), _end(end), _function(func), _data(*iter){};
+                    : _iter(iter), _end(end), _function(func)
+                    {
+                        if (_iter != end)
+                        _data =*iter;
+                    };
             iterator(const iterator& other) = default;
             iterator& operator=(const iterator& other){
                 if(this != &other) {
